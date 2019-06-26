@@ -1,11 +1,11 @@
-#Memory Puzzle
+# Memory Puzzle
 Today we're going to implement a simple command-line version of the classic Match 2 memory card game.
 
 Here is a glimpse of what the final product will look like when you are done:
 
 (https://assets.aaonline.io/fullstack/ruby/projects/memory/memory.gif)
 
-##Learning Goals
+## Learning Goals
 Understand how classes interact in an object-oriented program
 Be able to use require_relative
 Be able to write the methods [] and []= and explain how they work
@@ -14,12 +14,12 @@ Know how to initialize an Array with a default value
 Know how to use duck typing to allow different classes to interact with your program
 Write classes for Card, Board, and Game. Please put each class in its own file and use require_relative to include other files in your program.
 
-##Card
+## Card
 A Card has two useful bits of information: its face value, and whether it is face-up or face-down. You'll want instance variables to keep track of this information. You'll also want a method to display information about the card: nothing when face-down, or its value when face-up. I also wrote `#hide`, `#reveal`, `#to_s`, and `#==` methods.
 
 **Common problem:** Having issues with `#hide` and `#reveal?` Try testing small. Accessing this on GitHub? Use this link.
 
-##Board
+## Board
 The Board is responsible for keeping track of all your Cards. You'll want a grid instance variable to contain Cards. Useful methods:
 
 `#populate` should fill the board with a set of shuffled Card pairs
@@ -28,7 +28,7 @@ The Board is responsible for keeping track of all your Cards. You'll want a grid
 `#reveal` should reveal a Card at guessed_pos (unless it's already face-up, in which case the method should do nothing). It should also return the value of the card it revealed (you'll see why later).
 
 
-##Game
+## Game
 The Game should have instance variable for the Board and the previously-guessed position (if any). It should also have methods for managing the Board-Player interaction. You may want a play loop that runs until the game is over. Inside the loop, you should render the board, prompt the player for input, and get a guessed pos. Pass this pos to a make_guess method, where you will handle the actual memory/matching logic. Some tips on implementing this:
 
 If we're not already checking another Card, leave the card at guessed_pos face-up and update the previous_guess variable.
