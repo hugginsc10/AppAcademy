@@ -3,7 +3,7 @@ Today we're going to implement a simple command-line version of the classic Matc
 
 Here is a glimpse of what the final product will look like when you are done:
 
-(https://assets.aaonline.io/fullstack/ruby/projects/memory/memory.gif)
+![memory game preview](https://assets.aaonline.io/fullstack/ruby/projects/memory/memory.gif)
 
 ## Learning Goals
 Understand how classes interact in an object-oriented program
