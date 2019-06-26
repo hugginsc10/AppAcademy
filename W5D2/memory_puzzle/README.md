@@ -7,7 +7,7 @@ Here is a glimpse of what the final product will look like when you are done:
 
 ## Learning Goals
 Understand how classes interact in an object-oriented program
-Be able to use require_relative
+Be able to use `require_relative`
 Be able to write the methods `[]` and `[]=` and explain how they work
 Develop a workflow that uses pry to test small parts of your code
 Know how to initialize an Array with a default value
