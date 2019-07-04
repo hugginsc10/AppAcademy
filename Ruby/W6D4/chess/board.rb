@@ -4,6 +4,7 @@ require_relative "piece"
 class Board
     attr_reader :rows
     def initialize()
+        @rows = Array.new(8){Array.new(8)}
     end
     def [](pos)
         x,y = pos
@@ -21,6 +22,7 @@ class Board
         if self.empty?(start_pos)
             raise "empty position"
         end
-        
+        piece.pos = end_pos
     end
+    
 end
