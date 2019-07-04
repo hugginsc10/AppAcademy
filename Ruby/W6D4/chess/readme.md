@@ -5,7 +5,7 @@ Please read all through the various phases before proceeding.
 
 Review the Chess UML Diagram to get an overview of what you'll be creating. The diagram is beneficial for getting an idea of how different aspects of the project fit together; however, you should code your project by following the instructions closely and using the diagram as a reference for what methods we should create and what they should look like. It'll be helpful for clearing up any confusion about how classes inherit from or relate to one another.
 
-You must split your program into multiple files. Use require_relative to load files. Make separate files for each class. Give files snake_case titles.
+You must split your program into multiple files. Use `require_relative` to load files. Make separate files for each class. Give files snake_case titles.
 
 Don't forget to keep using Git. Look back at Minesweeper's instructions and read the Git portions again if you need a reminder.
 
