@@ -1,3 +1,4 @@
+require " active_support/all"
 require_relative "piece"
 
 class Board
@@ -14,7 +15,7 @@ class Board
     end
     def move_piece(start_pos, end_pos, color)
         piece = self[start_pos]
-        if piece.moves.none?(end_pos)
+        if piece.moves.exclude?(end_pos)
             raise "Invalid move"
         end
         if self.empty?(start_pos)
@@ -22,3 +23,4 @@ class Board
         end
         
     end
+end
