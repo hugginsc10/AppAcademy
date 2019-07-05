@@ -1,0 +1,22 @@
+b {
+    font-family: Arial, sans-serif;
+}
+h1 {
+    font-size: 38px;
+}
+h2 {
+    font-size: 32px;
+}
+.ingredients-list {
+    list-style: square inside;
+}
+ul {
+    list-style: circle;
+}
+header img {
+    width: 100px;
+}
+a:link {
+    text-decoration: none;
+    color: inherit;
+} 
