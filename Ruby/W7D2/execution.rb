@@ -36,7 +36,7 @@ end
 list = [2, 3, -6, 7, -6, 7]
 p lcs(list) # => 8 (from [7, -6, 7])
 
-# Kareane's Algo(Maximum Sub Array - only returning max_current)
+# Kadane's Algo(Maximum Sub Array - only returning max_current)
 def lcs(list)
     max_ending, max_current = 0, 0
     cur_st, max_st, max_ed = 0, nil, nil
