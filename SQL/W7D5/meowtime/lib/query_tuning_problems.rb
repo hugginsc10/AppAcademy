@@ -53,6 +53,18 @@ def cats_and_toys_alike
   # Get your overall cost lower than: 590
   execute(<<-SQL)
 
+  SELECT DISTINCT
+    cats.name
+  FROM
+    cats
+    JOIN
+      cattoys ON cattoys.cat_id = cats.id
+    JOIN
+      toys ON cattoys.toy_id = toys.id
+    WHERE
+      cats.color = 'Blue' AND toys.color = 'Blue'
+    ORDER BY
+      cats.name;
   SQL
 end
 
@@ -61,8 +73,19 @@ def toyless_blue_cats
 
   # Get your overall cost lower than: 95
   execute(<<-SQL)
+  SELECT DISTINCT
+    cats.name
+  FROM
+    cats
+  LEFT OUTER JOIN
+    cattoys ON cats.id = cattoys.cat_id
+  WHERE
+    cattoys.toy_id IS NULL AND cats.color = 'Navy Blue';
+  
 
   SQL
+  #CREATE INDEX toy_id ON cattoys(toy_id);
+  #CREATE INDEX cat_id ON cattoys(cat_id);
 end
 
 def find_unknown
@@ -72,6 +95,18 @@ def find_unknown
 
   # Get your overall cost lower than: 406
   execute(<<-SQL)
+   SELECT
+    toys.name
+  FROM
+    cats
+    JOIN 
+      cattoys ON cattoys.cat_id = cats.id
+    JOIN
+      toys ON cattoys.toy_id = toys.id
+    WHERE
+      cats.breed = 'Unknown'
+    ORDER BY
+      toys.name;
 
   SQL
 end
@@ -85,8 +120,24 @@ def cats_like_johnson
 
   # Get your overall cost lower than: 100
   execute(<<-SQL)
+  SELECT 
+    cats.name
+  FROM
+    cats
+  WHERE cats.breed = (
+    SELECT
+      breed
+    FROM
+      cats
+    WHERE
+      name = 'Johnson' AND color = 'Lavender')
+  ORDER BY
+    cats.name;
+
 
   SQL
+  #CREATE INDEX color_name ON cats(color, name);
+  #CREATE INDEX breed ON cats(breed);
 end
 
 
@@ -96,8 +147,31 @@ def cheap_toys_and_their_cats
   # Order alphabetically by cats name
   # Get your overall cost lower than: 230
   execute(<<-SQL)
+  SELECT 
+    cats.name
+  FROM
+    toys
+  JOIN
+    cattoys ON toys.id = cattoys.toy_id
+  JOIN
+    cats ON cats.id = cattoys.cat_id
+  WHERE
+    toys.id IN (
+      SELECT
+        toys.id
+      FROM
+        toys
+      ORDER BY
+        toys.price ASC
+      LIMIT 1
+    )
+  ORDER BY
+    cats.name;
   
   SQL
+
+#CREATE INDEX toy_id ON cattoys(toy_id);
+#CREATE INDEX cat_id ON cattoys(cat_id);
 end
 
 def cats_with_a_lot
@@ -106,6 +180,23 @@ def cats_with_a_lot
   # Order alphabetically by cat name
   # Get your overall cost lower than: 730
   execute(<<-SQL)
+  SELECT DISTINCT
+    cats.name
+  FROM
+    cats
+  WHERE
+    cats.id IN (
+      SELECT
+        cattoys.cat_id
+      FROM
+        cattoys
+      GROUP BY
+        cattoys.cat_id
+      HAVING
+        COUNT(*) > 7
+    )
+  ORDER BY
+      cats.name;
 
   SQL
 end
@@ -117,8 +208,28 @@ def expensive_tastes
   # Order alphabetically by cat name
   # Get your overall cost lower than: 720
   execute(<<-SQL)
+  SELECT
+    cats.name, toys.name, toys.color
+  FROM
+    toys
+  JOIN
+    cattoys ON toys.id = cattoys.toy_id
+  JOIN
+    cats ON cats.id = cattoys.cat_id
+  WHERE
+    toys.price = (
+      SELECT
+        MAX(price)
+      FROM
+        toys
+    )
+  ORDER BY
+    cats.name
+
 
   SQL
+  #CREATE INDEX price ON toys(price);
+  #CREATE INDEX cattoy_toy ON cattoys(toy_id);
 end
 
 
@@ -128,7 +239,16 @@ def five_cheap_toys
   # Order alphabetically by toy name.
   # Get your overall cost lower than: 425
   execute(<<-SQL)
-
+  SELECT toys.name, toys.price
+  FROM toys
+  WHERE id in (
+    SELECT toys.id
+    FROM toys
+    ORDER BY toys.price
+    LIMIT 5
+  )
+  ORDER BY
+    name;
 
   SQL
 end
@@ -138,7 +258,21 @@ def top_cat
 
   # Get your overall cost lower than: 1050
   execute(<<-SQL)
-
+  EXPLAIN
+  SELECT
+    cats.name, COUNT(cattoys.toy_id)
+  FROM
+    cats
+    JOIN cattoys ON cattoys.cat_id = cats.id
+  WHERE cats.id IN (
+    SELECT cattoys.cat_id
+    FROM cattoys
+    GROUP BY cattoys.cat_id
+    ORDER BY count(toy_id) DESC
+    LIMIT 1
+  )
+  GROUP BY
+    cats.name;
   SQL
 end
 

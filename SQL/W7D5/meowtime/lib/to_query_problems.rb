@@ -130,7 +130,20 @@ def no_apples_for_blair
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    cats.name
+  FROM
+    cats
+  JOIN
+    cattoys ON cattoys.cat_id = cats.id
+  JOIN
+    toys ON toys.id = cattoys.toy_id
+  WHERE
+    toys.name = 'Apple'
+    AND
+    cats.name != 'Blair'
+  ORDER BY 
+    cats.name;
   SQL
 end
 
@@ -142,6 +155,28 @@ def no_apples_for_blair_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
+  SELECT
+    cats.name
+  FROM
+    cats
+  WHERE
+    cats.name != 'Blair'
+    AND
+    cats.id IN (
+      SELECT 
+        cat_id
+      FROM
+        cattoys
+      WHERE
+        cattoys.toy_id IN (
+          SELECT
+            id
+          FROM
+            toys
+          WHERE
+            name = 'Apple'))
+      ORDER BY
+          cats.name;
 
   SQL
 end
