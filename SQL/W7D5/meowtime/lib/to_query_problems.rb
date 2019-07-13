@@ -61,13 +61,13 @@ def frey_example_sub
       cats
     WHERE
       cats.color = (
-                    SELECT  
-                      cats.color
-                    FROM
-                      cats
-                    WHERE
-                      name = 'Freyja'
-                    );
+      SELECT  
+        cats.color
+      FROM
+        cats
+      WHERE
+        name = 'Freyja'
+      )
   SQL
 end
 
@@ -91,7 +91,7 @@ def harder_example
     WHERE
       cats.breed = 'British Shorthair'
     ORDER BY
-      toys.name ASC;
+      toys.name;
   SQL
 end
 
@@ -107,18 +107,19 @@ def harder_example_sub
     FROM
       toys
     WHERE 
-      toys.id IN (SELECT
-                    toys.id
-                  FROM 
-                    toys
-                  JOIN 
-                    cattoys ON toys.id = cattoys.toy_id
-                  JOIN 
-                    cats ON cats.id = cattoys.cat_id
-                  WHERE
-                    cats.breed = 'British Shorthair')
+      toys.id IN (
+      SELECT
+        toys.id
+      FROM 
+        toys
+      JOIN 
+        cattoys ON toys.id = cattoys.toy_id
+      JOIN 
+        cats ON cats.id = cattoys.cat_id
+      WHERE
+        cats.breed = 'British Shorthair')
     ORDER BY
-      toys.name ASC;
+      toys.name;
   SQL
 end
 
