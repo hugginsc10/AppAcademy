@@ -28,10 +28,10 @@ require_relative '../data/query_tuning_setup.rb'
 # For that is the question!
 # For each of the following problems you will try to write each
 # problem WITH and WITHOUT subqueries, testing the efficiency
-# of each query as you go. 
+# of each query AS you go. 
 
 def frey_example
-  # Find all the cats that are the same color as the cat named 'Freyja'.
+  # Find all the cats that are the same color AS the cat named 'Freyja'.
   # Including 'Freyja' in the results.
   # DO NOT USE A SUBQUERY
 
@@ -48,7 +48,7 @@ def frey_example
 end
 
 def frey_example_sub
-  # Find all the cats that are the same color as the cat named 'Freyja'.
+  # Find all the cats that are the same color AS the cat named 'Freyja'.
   # Including 'Freyja' in the results.
 
   # Using Explain you can see these queries are very similiar! Since our 
@@ -77,7 +77,7 @@ def harder_example
   # Order alphabetically by toys name. 
   # DO NOT USE A SUBQUERY
 
-  # Whereas in this query it is more efficient to not perform a subquery 
+  # WhereAS in this query it is more efficient to not perform a subquery 
   # because we don't have to do the extra cost of a large subquery.
   execute(<<-SQL)
     SELECT
@@ -124,7 +124,7 @@ end
 
 
 def no_apples_for_blair
-  # Blair has was too many apple toys! Find the name of all the cats that
+  # Blair hAS wAS too many apple toys! Find the name of all the cats that
   # own toys named `Apple` that aren't `Blair`. 
   # Order by cat name alphabetically.
 
@@ -149,7 +149,7 @@ end
 
 
 def no_apples_for_blair_sub
-  # Blair has was too many apple toys! Find the name of all the cats that
+  # Blair hAS wAS too many apple toys! Find the name of all the cats that
   # own toys named `Apple` that aren't `Blair`. 
   # Order by cat name alphabetically.
 
@@ -188,6 +188,16 @@ def toys_that_brendon_owns
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
+  SELECT
+    toys.namne
+  FROM
+    cats
+    JOIN cattoys ON cats.id cattoys.cat_id
+    JOIN toys ON toys.id = cattoys.toy_id
+  WHERE
+    cats.name = 'Brendon'
+  ORDER BY
+    toys.name;
 
   SQL
 end
@@ -198,20 +208,45 @@ def toys_that_brendon_owns_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    toys.name
+  FROM toys
+  JOIN cattoys ON toys.id = cattoys.toy_id
+  JOIN cats ON cats.id = cattoys.cat_id
+  WHERE
+    cats.id IN (
+      SELECT
+        cats.id
+      FROM
+        cats
+      WHERE
+        cats.name = 'brendon'
+    )
+    ORDER BY
+      toys.name;
   SQL
 end
 
 def price_like_shiny_mouse
   # There are multiple 'Shiny Mouse' toys that all have different prices.
   # Your goal is to list all names and prices of the toys with the same prices 
-  # as the different 'Shiny Mouse' toys. 
+  # AS the different 'Shiny Mouse' toys. 
 
   # Exclude the 'Shiny Mouse' toy from your results.
   # Order your alphabetically by toy name.
 
   # DO NOT USE A SUBQUERY
-  execute(<<-SQL) 
+  execute(<<-SQL)
+  SELECT
+    notshinytoys.name, notshinytoys.price
+  FROM
+    toys AS notshinytoys
+    JOIN toys ON notshinytoys.price = shinytoys.price
+  WHERE 
+    shinytoys.name = 'Shiny Mouse' AND notshinytoys.name != 'Shiny Mouse'
+  ORDER BY
+    notshinytoys.name;
+    
   
   SQL
 end
@@ -219,13 +254,30 @@ end
 def price_like_shiny_mouse_sub
   # There are multiple 'Shiny Mouse' toys that all have different prices.
   # Your goal is to list all names and prices of the toys with the same prices 
-  # as the different 'Shiny Mouse' toys. 
+  # AS the different 'Shiny Mouse' toys. 
 
   # Exclude the 'Shiny Mouse' toy from your results.
   # Order your alphabetically by toy name.
 
   # USE A SUBQUERY
-  execute(<<-SQL) 
+  execute(<<-SQL)
+  SELECT
+    toys.name, toys.price
+  FROM 
+    toys
+  WHERE
+    toys.name != 'Shiny Mouse'
+    AND 
+    toys.price IN (
+      SELECT
+        toys.price
+      FROM
+        toys
+      WHERE
+        toys.name = 'Shiny Mouse'
+    )
+    ORDER BY
+    toys.name;
 
   SQL
 end
@@ -238,7 +290,16 @@ def just_like_orange
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    notorangecats.name, notorangecats.breed
+  FROM 
+    cats AS notorangecats
+  JOIN 
+    cats AS orangecats ON orangecats.breed = notorangecats.breed
+  WHERE 
+    orangecats.name = 'Orange' AND notorangecats.name != 'Orange'
+  ORDER BY
+    notorangecats.name;
   SQL
 end
 
@@ -250,6 +311,21 @@ def just_like_orange_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
+  SELECT
+    cats.name, cats.breed
+  FROM 
+    cats
+  WHERE
+    cats.name != 'Orange' AND cats.breed IN (
+      SELECT
+        cats.breed
+      FROM
+        cats
+      WHERE
+        cats.name = 'Orange'
+    )
+  ORDER BY
+  cats.name;
 
   SQL
 end
@@ -258,24 +334,53 @@ end
 
 def toys_that_jet_owns
   # Find all of the toys that Jet owns. Then list the the names of all 
-  # the other cats that own those toys as well as the toys names.
+  # the other cats that own those toys AS well AS the toys names.
   # Exclude Jet from the results.
   # Order alphabetically by cat name. 
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
+  SELECT
+      cats.name,
+      toys.name
+  FROM
+    toys
+    LEFT OUTER JOIN
+      toys AS jet_toy ON jet_toy.id = toys.id
+    JOIN
+      cattoys ON cattoys.toy_id = toys.id
+    JOIN
+      cats ON cattoys.cat_id = cats.id
+  WHERE cats.name NOT LIKE 'Jet' AND jet_toy.name = 'Jet'
+  ORDER BY toys.name;
 
   SQL
 end
 
 def toys_that_jet_owns_sub
   # Find all of the toys that Jet owns. Then list the the names of all 
-  # the other cats that own those toys as well as the toys names.
+  # the other cats that own those toys AS well AS the toys names.
   # Exclude Jet from the results.
   # Order alphabetically by cat name. 
 
   # USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT cats.name, toys.name
+  FROM cats
+    JOIN
+      cattoys ON cattoys.cat_id = cats.id
+    JOIN
+      toys ON toys.id = cattoys.toy_id
+  WHERE cats.name NOT LIKE 'Jet' AND toys.id IN (
+    SELECT toys.id
+    FROM toys
+    JOIN
+    cattoys ON cattoys.toy_id = toys.id
+    JOIN
+    cats ON cats.id = cattoys.cat_id
+    WHERE cats.name = 'Jet'
+      
+    )
+  ORDER BY cats.name;
   SQL
 end
