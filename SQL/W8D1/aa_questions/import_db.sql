@@ -137,8 +137,3 @@ VALUES
     ((SELECT id FROM users WHERE fname = 'Chas' AND lname = 'Huggins'),
     (SELECT id FROM questions WHERE title = 'Andy Wynkoop Question'));
 
--- INSERT INTO cattoys (cat_id, toy_id)
---     VALUES (
---         (SELECT id FROM cats WHERE name = 'Finster'),
---         (SELECT id FROM toys WHERE name = 'scratching thing')
---             ),
