@@ -5,7 +5,32 @@ body {
   font-family: Arial, sans-serif;
   background-color: #FEFFF1;
 }
+header img {
+  float: left;
+}
+nav ul li {
+  display: inline-block;
+  padding: 20px;
+  margin: auto;
 
+}
+body {
+  width: 900px;
+  margin: auto;
+}
+section {
+  width: 700px;
+  
+
+}
+aside {
+  width: 180px;
+  float: right;
+  margin-right: 15px;
+}
+ul li a {
+  display: block
+}
 h1 {
   font-size: 38px;
 }
@@ -32,8 +57,13 @@ header > img {
 
   /* The list style property is shorthand for multiple list-style properties*/
   list-style: square inside;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
-
+.direction {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
 ol {
   list-style: upper-roman inside;
 }
@@ -45,8 +75,8 @@ ol {
 
 input[type="radio"] {
     -webkit-appearance: none;
-    width: 27px;
-    height: 27px;
+    width: 12px;
+    height: 12px;
     background-image: url(../assets/stars.png);
     vertical-align: bottom;
 }
@@ -66,9 +96,25 @@ input:last-child:hover {
 
 ol li:nth-of-type(2n) {
   background-color: whitesmoke;
+  margin: 10px 0;
 }
 
 h2 + .user_review {
     border-top: 1px solid black;
 }
 
+input {
+  display: block;
+}
+select {
+  margin: 10px 0;
+  width: 180px
+
+}
+input[type="text"], select {
+  display: block;
+  width:170;
+}
+textarea {
+  width: 350px;
+}
