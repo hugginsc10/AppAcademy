@@ -16,9 +16,10 @@ class ShortenedURL < ApplicationRecord
     end
 
     def self.create_shortened_url_for_user(user, long_url)
-        ShortenedURL.create!
+        ShortenedURL.create( #collection.create(attributes = {})
             submitter_id: user.id,
             long_url: long_url,
-            short_url: ShortenedURL.random_code
+            short_url: ShortenedURL.random_code)
+        
     end
 end
