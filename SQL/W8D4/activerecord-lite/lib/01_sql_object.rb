@@ -21,7 +21,7 @@ class SQLObject
   def self.columns
 
     return @columns if @columns
-    cols = DBConnection.execute2(<<-SQL).first
+    cols = DBConnection.execute2(<<-SQL).first --only returning first row
       SELECT
         *
       FROM
@@ -61,14 +61,14 @@ class SQLObject
       FROM
         #{table_name} 
     SQL
-    parse_all(results)
+    parse_all(results) #necessary to show all results
   end
 
   def self.parse_all(results)
     results.map {|result| self.new(result)}
   end
 
-  def self.find(id)
+  def self.find(id) #is only going to find 1 row
     results = DBConnection.execute(<<-SQL, id)
     SELECT
       *
@@ -82,8 +82,8 @@ class SQLObject
 
   def initialize(params = {})
     params.each do |attr_name, val|
-      attr_name = attr_name.to_sym
-      if self.class.columns.include?(attr_name)
+      attr_name = attr_name.to_sym #need to convert to symbol before seeing if attribute is in columns
+      if self.class.columns.include?(attr_name) 
         self.send("#{attr_name}=", val)
       else 
         raise "unknown attribute '#{attr_name}'"
@@ -103,18 +103,18 @@ class SQLObject
     columns = self.class.columns[1..-1]
     col_names = columns.map(&:to_s).join(", ")
     question_marks = (['?'] * columns.count).join(", ")
-    DBConnection.execute(<<-SQL, *attribute_values[1..-1])
+    DBConnection.execute(<<-SQL, *attribute_values[1..-1]) --don't want to take in id column
       INSERT INTO
         #{self.class.table_name} (#{col_names})
       VALUES  
         (#{question_marks})
       SQL
-      self.id = DBConnection.last_insert_row_id
+      self.id = DBConnection.last_insert_row_id #from DBConnection makes id the next id from last table row
   end
 
   def update
     set_line = self.class.columns.map{|attribute|  "#{attribute} = ?"}.join(", ")
-    DBConnection.execute(<<-SQL, *attribute_values, id)
+    DBConnection.execute(<<-SQL, *attribute_values, id) --parameters by ? order
       UPDATE
         #{self.class.table_name}
       SET
@@ -124,7 +124,7 @@ class SQLObject
       SQL
   end
 
-  def save
+  def save #insert didn't use an id in SQL query
     if id == nil
       insert
     else
