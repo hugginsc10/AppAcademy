@@ -12,7 +12,7 @@ module Searchable
       WHERE
         #{where_line}
     SQL
-    parse_all(result) #necessary to return hash results
+    parse_all(result)
   end
 end
 
