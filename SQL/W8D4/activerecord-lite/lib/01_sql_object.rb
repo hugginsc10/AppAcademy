@@ -110,14 +110,14 @@ class SQLObject
   end
 
   def update
-    set_line = self.class.columns.map{|attribute|  "#{attribute} = ?"}.join(", ")-# --below--parameters by ? order
+    set_line = self.class.columns.map{|attribute|  "#{attribute} = ?"}.join(", ") # --below--parameters by ? order
     DBConnection.execute(<<-SQL, *attribute_values, id) 
       UPDATE
         #{self.class.table_name}
       SET
         #{set_line}
       WHERE
-        id = ?
+       id = ?
       SQL
   end
 
