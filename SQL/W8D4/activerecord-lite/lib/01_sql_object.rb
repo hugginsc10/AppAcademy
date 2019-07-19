@@ -19,16 +19,13 @@ require 'active_support/inflector'
 #    %>
 class SQLObject
   def self.columns
-
-    return @columns if @columns
-    cols = DBConnection.execute2(<<-SQL).first --only returning first row
+    @columns ||= DBConnection.execute2(<<-SQL)
       SELECT
-        *
+       *
       FROM
-        #{self.table_name}    
+        #{self.table_name}
     SQL
-    cols.map!(&:to_sym)
-    @columns = cols
+    @columns.first.map(&:to_sym)
   end
 
   def self.finalize!
@@ -102,8 +99,8 @@ class SQLObject
   def insert
     columns = self.class.columns[1..-1]
     col_names = columns.map(&:to_s).join(", ")
-    question_marks = (['?'] * columns.count).join(", ")
-    DBConnection.execute(<<-SQL, *attribute_values[1..-1]) --don't want to take in id column
+    question_marks = (['?'] * columns.count).join(", ") #below don't want to take in id column 
+    DBConnection.execute(<<-SQL, *attribute_values[1..-1]) 
       INSERT INTO
         #{self.class.table_name} (#{col_names})
       VALUES  
@@ -113,8 +110,8 @@ class SQLObject
   end
 
   def update
-    set_line = self.class.columns.map{|attribute|  "#{attribute} = ?"}.join(", ")
-    DBConnection.execute(<<-SQL, *attribute_values, id) --parameters by ? order
+    set_line = self.class.columns.map{|attribute|  "#{attribute} = ?"}.join(", ")-# --below--parameters by ? order
+    DBConnection.execute(<<-SQL, *attribute_values, id) 
       UPDATE
         #{self.class.table_name}
       SET
