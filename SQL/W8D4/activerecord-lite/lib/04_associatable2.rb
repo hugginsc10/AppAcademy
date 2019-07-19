@@ -8,12 +8,8 @@ module Associatable
     define_method(name) do
       through_options = self.class.assoc_options[through_name]
       source_options = through_options.model_class.assoc_options[source_name]
-      sprimary = source_options.primary_key
-      sforeign = source_options.foreign_key
-      stable = source_options.table_name
-      tprimary = through_options.primary_key
-      tforeign = through_options.foreign_key
-      ttable = through_options.table_name
+      sprimary, sforeign, stable = source_options.primary_key, source_options.foreign_key, source_options.table_name
+      tprimary, tforeign, ttable = through_options.primary_key, through_options.foreign_key, through_options.table_name
       foreign = self.send(tforeign)
       results = DBConnection.execute(<<-SQL, foreign)
         SELECT
