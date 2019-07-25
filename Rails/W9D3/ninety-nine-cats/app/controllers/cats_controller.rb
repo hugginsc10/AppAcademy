@@ -21,7 +21,6 @@ class CatsController < ApplicationController
         if @cat.save 
           redirect_to cat_url(@cat)
         else   
-          flash.now[:errors] = @cat.errors.full_messages 
           render :new
         end
     end
@@ -35,9 +34,8 @@ class CatsController < ApplicationController
         @cat = Cat.find_by(id: params[:id])
         
         if @cat.update_attributes(cat_parms)
-            redirect_to cats_url(@cat)
+            redirect_to cat_url(@cat)
         else 
-            flash.now[:errors] = @cat.errors.full_messages 
             render :edit 
         end 
     end 
