@@ -1,0 +1,14 @@
+<h1><%= @cat.name %></h1>
+<table>
+    <tr>
+        <th>attribute</th>
+        <th>value</th> 
+
+    </tr>
+    <% @attrs.each do |attr|%>
+    <tr>
+        <td><%= attr %></td>
+        <td><%= @cat.send(attr) %></td>
+    </tr>
+    <% end %>
+</table>
