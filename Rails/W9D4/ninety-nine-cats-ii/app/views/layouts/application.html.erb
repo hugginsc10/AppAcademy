@@ -9,15 +9,21 @@
   </head>
 
   <body>
-    <header>
+  <nav class="main-nav">
+    <div>
       <% if current_user.nil? %>
         <%= link_to 'Login', new_session_url %>
         <%= link_to 'Sign up', new_user_url %>
       <% else %>
         <%= current_user.username %>
-        <%= button_to 'Logout', session_url, method: :destroy %>
+        <form action="/session" method="post">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <input type="hidden" name="_method" value="delete">
+          <input type="submit" value="Logout">
+        </form>
       <% end %>
-    </header>
+    </div>
+    </nav>
     <%= yield %>
   </body>
 </html>

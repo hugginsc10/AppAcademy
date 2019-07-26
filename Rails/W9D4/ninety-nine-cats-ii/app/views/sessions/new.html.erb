@@ -1,16 +1,18 @@
+<section class="page"><div class="centered-box">
 <h1>Login</h1>
- <form action="<% session_url %>" method="post">
+ <form action="/session" method="post">
     <input
         type="hidden"
         name="authenticity_token"
-        value="<%= form_authenticty_token %>">
-    <label for="username">Username</label>
-    <input type="text" name="user[username]" id="username">
+        value="<%= form_authenticity_token %>">
+    <label for="chas">Username</label>
+    <input type="text" name="user[username]" id="chas">
 
-    <label for="password">Password</label>
-    <input type="password" name="user[password]" id="password">
+    <label for="user_password">Password</label>
+    <input type="password" name="user[password]" id="user_password">
 
     <input type="submit">
 
     
  </form>
+ </div></section>
