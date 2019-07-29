@@ -6,6 +6,8 @@ class User < ApplicationRecord
    before_validation :ensure_token
    attr_reader :password
 
+   has_many :goals
+   
    def password=(password)
       @password = password
       self.password_digest = BCrypt::Password.create(password)

@@ -61,5 +61,7 @@ RSpec.describe User, type: :model do
       expect(User.find_by_credentials(user.email, "naynaynayany")).not_to eq(user)
     end
   end
-
+    describe "associations" do
+      it {should have_many(:goals)}
+    end
 end 
