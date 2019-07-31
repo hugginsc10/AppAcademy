@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+#!/usr/bin/env ruby
+begin
+  load File.expand_path('../spring', __FILE__)
+rescue LoadError => e
+  raise unless e.message.include?('spring')
+end
+APP_PATH = File.expand_path('../config/application', __dir__)
+require_relative '../config/boot'
+require 'rails/commands'
+=======
 #!/usr/bin/env ruby2.5
 # frozen_string_literal: true
 
@@ -27,3 +38,4 @@ require "rubygems"
 require "bundler/setup"
 
 load Gem.bin_path("railties", "rails")
+>>>>>>> c54c60549355d22aa7913dbd708c3357aabb0a0d
