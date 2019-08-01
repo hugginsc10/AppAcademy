@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  body: MyText
+  parent_comment: one
+  post: one
+  user: one
+
+two:
+  body: MyText
+  parent_comment: two
+  post: two
+  user: two

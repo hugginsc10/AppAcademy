@@ -1,0 +1,20 @@
+<% action_url = sub.persisted? ? sub_url(sub) : subs_url %>
+<% value_method = sub.persisted? ? "PATCH" : "POST" %>
+
+<form action="<%= action_url %>" method="POST">
+  <%= form_athenticity_token_helper %>
+  <input type="hidden" name="_method" value="<%= value_method %>">
+
+<label>
+  Name
+  <input name="sub[title]" value="<%= sub.title %>">
+  </label>
+  
+
+
+<label>
+    Description
+    <textarea name="sub[description]" value="<%= sub.description %>">
+</label>
+  <input type="sumbit" value="sumbit">
+</form>
