@@ -1,0 +1,68 @@
+#main{
+    text-align: center;
+    margin: 0 auto;
+}
+.row {
+  width: 250px;
+  margin: 0 auto;
+  display: flex;
+}
+h1 {
+  text-align: center;
+
+}
+
+#board{
+    display: block;
+    text-align: center;
+}
+
+.tile {
+  width: 20px;
+  height: 20px;
+  background:lightgray;
+  border-style: outset;
+  border-width: 3px;
+  text-align: center;
+  position: relative;
+  
+  
+}
+
+.explored {
+    border-style: inset;
+    backround: yellow;
+}
+
+.flagged, .bombed {
+    color: red;
+}
+
+.modal-background {
+    background: rgba(0,0,0, 0.8);
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+
+}
+
+.modal-content {
+    position: absolute;
+    top: 23%;
+    left: 42%;
+    width: 200px;
+    height: 90px;
+    background: white;
+    z-index: 3;
+    border: 2px solid black;
+    border-radius: 6px;
+    
+}
+
+p{
+    font-size: 13px;
+    text-align: center;
+}

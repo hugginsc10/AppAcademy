@@ -1,0 +1,25 @@
+.clock {
+    font-family: Orbitron;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    background-color: orange;
+    width: 500px;
+    border: 2px solid black;
+    margin: 0 20px 20px 20px;
+    background-size: cover;
+    padding: 10px;
+    background-position-y: 20%;
+    
+}
+.clock p{
+  color: white;
+  margin: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.tab {
+  width: 140px;
+  background-color: lightblue;
+  border: 2px solid black;
+}
