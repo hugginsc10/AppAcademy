@@ -1,0 +1,18 @@
+version: "3"
+services:
+  web:
+    build: .
+    image: phase1/flask
+    environment: 
+      - FLASK_ENV=development
+    ports:
+      - "5000:5000"
+    networks:
+      - phase1_default
+  redis:
+    image: redis:4.0.11-alpine
+    networks:
+      - phase1_default
+networks:
+  phase1_default:
+
