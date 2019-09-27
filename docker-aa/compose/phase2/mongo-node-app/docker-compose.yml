@@ -9,6 +9,12 @@ services:
       - MONGO_URI=mongodb://mongo_db/nodeapp
     networks:
       - nodemernapp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+     
 
   db:
     image: mongo:3.0.15
@@ -18,9 +24,6 @@ services:
       nodemernapp:
         aliases:
           - "mongo_db"
-
-
-
 networks:
   nodemernapp:
     driver: bridge
