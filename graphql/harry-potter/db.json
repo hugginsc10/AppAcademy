@@ -113,6 +113,18 @@
       "houseId": 2,
       "patronusId": 9,
       "id": 19
+    },
+    {
+      "name": "Chas Huggins",
+      "houseId": 4,
+      "patronusId": 3,
+      "id": 20
+    },
+    {
+      "name": "Roger Kiew",
+      "houseId": 2,
+      "patronusId": 6,
+      "id": 21
     }
   ],
   "houses": [
