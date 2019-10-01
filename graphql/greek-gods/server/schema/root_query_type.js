@@ -7,9 +7,12 @@ const {
   GraphQLNonNull
 } = graphql;
 
-const GodType = require("./god_type");
 const God = mongoose.model("god");
-
+const Abode = mongoose.model("abode");
+const Emblem = mongoose.model("emblem");
+const GodType = require("./god_type");
+const EmblemType = require("./emblem_type")
+const AbodeType = require('./abode_type')
 const RootQuery = new GraphQLObjectType({
   // remember to name your query properly
   name: "RootQueryType",
@@ -36,6 +39,40 @@ const RootQuery = new GraphQLObjectType({
         id
       }) {
         return God.findById(id);
+      }
+    },
+    emblems: {
+      type: new GraphQLList(EmblemType),
+      resolve() {
+        return Emblem.find({});
+      }
+    },
+    emblem: {
+      type: EmblemType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID)
+        }
+      },
+      resolve(parentValue, { id }) {
+        return Emblem.findById(id);
+      }
+    },
+    abodes: {
+      type: new GraphQLList(AbodeType),
+      resolve() {
+        return Abode.find({});
+      }
+    },
+    abode: {
+      type: AbodeType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID)
+        }
+      },
+      resolve(parentValue, {id}){
+        return Abode.findById(id);
       }
     }
   })
