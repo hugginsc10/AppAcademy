@@ -1,10 +1,11 @@
-require " active_support/all"
+require "active_support/all"
 require_relative "piece"
 
 class Board
-    attr_reader :rows
+    BACK_ROW = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+    attr_reader :grid
     def initialize()
-        @rows = Array.new(8){Array.new(8)}
+        @grid = Array.new(8){Array.new(8)}
     end
     def [](pos)
         x,y = pos
@@ -24,5 +25,4 @@ class Board
         end
         piece.pos = end_pos
     end
-    
 end
