@@ -130,12 +130,11 @@ def alien_cast
   SELECT
     actors.name
   FROM
-    actors INNER JOIN castings
-    ON
-      actors.id = castings.actor_id
+    actors
+    JOIN castings
+      ON actors.id = castings.actor_id
     JOIN movies
-    ON
-      castings.movie_id = movies.id
+      ON castings.movie_id = movies.id
   WHERE
     movies.title = 'Alien';
   SQL

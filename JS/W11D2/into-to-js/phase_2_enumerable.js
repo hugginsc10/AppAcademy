@@ -34,5 +34,5 @@ Array.prototype.myinject = function (func, value=this[0]){
   return ans;
 };
 
-const num = [1, 2, 3, 4, 5];
-console.log(num.myinject((accum, el) => accum + el));
+const num = [1, 2, 3, 4, 5, 10];
+console.log(num.myinject((accum, el) => accum * el));

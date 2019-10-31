@@ -178,7 +178,7 @@ def craiglockhart_and_tollcross
     JOIN stops stopa ON (a.stop_id = stopa.id)
     JOIN stops stopb ON (b.stop_id = stopb.id)
   WHERE
-    stops.name = 'Craiglockhart' AND stopb.name = 'Tailcross';
+    stops.name = 'Craiglockhart' AND stopb.name = 'Tollcross';
   SQL
 end
 

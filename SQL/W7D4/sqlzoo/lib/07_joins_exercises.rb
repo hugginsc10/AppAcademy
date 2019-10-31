@@ -28,9 +28,9 @@ def example_join
       *
     FROM
       movies
-    JOIN
+    INNER JOIN
       castings ON movies.id = castings.movie_id
-    JOIN
+    INNER JOIN
       actors ON castings.actor_id = actors.id
     WHERE
       actors.name = 'Sean Connery'
@@ -138,7 +138,7 @@ def prolific_actors
     name
   FROM
     actors
-    INNER JOIN
+    JOIN
       castings ON actors.id = castings.actor_id
     WHERE
       castings.ord = 1
@@ -158,7 +158,7 @@ def films_by_cast_size
   SELECT movies.title, COUNT(*)
   FROM 
     movies
-      INNER JOIN
+      JOIN
         castings ON movies.id = castings.movie_id
   WHERE
     movies.yr = '1978'
