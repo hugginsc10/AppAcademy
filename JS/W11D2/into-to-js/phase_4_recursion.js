@@ -56,7 +56,7 @@ function bsearch(nums, target){
     if (nums.length === 0){
         return -1;
     }
-    const mid = (nums.length)/2;
+    const mid = Math.floor(nums.length/2);
     const end = nums[nums.length - 1];
     if (target === nums[mid]){
         return mid;
@@ -65,7 +65,7 @@ function bsearch(nums, target){
         const bright = bsearch(right, target);
         return (bright + mid + 1);
     } else {
-        const left = nums.slice(0, mid - 1);
+        const left = nums.slice(0, mid);
         return bsearch(left, target);
     }
 }
